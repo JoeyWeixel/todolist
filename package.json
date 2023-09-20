@@ -1,0 +1,24 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "Exercise in using javascript OOP to create a functional todo list application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoeyWeixel/todolist.git"
+  },
+  "author": "Joey Weixel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoeyWeixel/todolist/issues"
+  },
+  "homepage": "https://github.com/JoeyWeixel/todolist#readme",
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  }
+}
