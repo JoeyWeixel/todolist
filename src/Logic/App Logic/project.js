@@ -10,10 +10,11 @@ class project{
     this.taskList.push(task);
   }
 
-  removeTask(task){
-    const i = this.checks.indexOf(check);
-    if (i > -1) {
-      array.splice(i, 1);
-    }
+  removeTask(taskToRemove){
+    _.remove(array, (arrayElement) =>{
+      arrayElement == taskToRemove;
+    })
   }
 }
+
+export default project;

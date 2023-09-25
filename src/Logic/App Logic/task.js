@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 class task{
   constructor(name, importance, description, dueDate){
     this.name = name;
@@ -57,11 +59,10 @@ class checklist extends task{
     this.checks.push(check);
   }
 
-  removeCheck(check){
-    const i = this.checks.indexOf(check);
-    if (i > -1) {
-      array.splice(i, 1);
-    }
+  removeCheck(checkToRemove){
+    _.remove(array, (arrayElement) =>{
+      arrayElement == checkToRemove;
+    })
   }
 
   generatePageElements(){
