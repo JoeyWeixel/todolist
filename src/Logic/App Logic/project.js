@@ -15,6 +15,10 @@ class project{
       arrayElement == taskToRemove;
     })
   }
+
+  getTaskList(){
+    return this.taskList;
+  }
 }
 
 export default project;

@@ -23,6 +23,22 @@ class task{
     this.dueDate = newDueDate;
   }
 
+  getImportance(){
+    return this.importance;
+  }
+
+  getName(){
+    return this.name;
+  }
+
+  getNote(){
+    return this.note;
+  }
+
+  getDueDate(){
+    return this.dueDate;
+  }
+
   generatePageElements(){
     const task = document.createElement('div');
     task.classList.add('task');
