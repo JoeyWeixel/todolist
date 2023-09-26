@@ -1,6 +1,7 @@
-import "/task.js";
+import _ from "lodash";
+import element from "./element";
 
-class project{
+class project extends element{
   constructor(name){
     this.name = name;
     this.taskList = new Array;
@@ -18,6 +19,14 @@ class project{
 
   getTaskList(){
     return this.taskList;
+  }
+
+  generatePageElements(){
+    const project = document.createElement('div');
+    divide.classList.add('project');
+    this.taskList.forEach(element => {
+      const task = element.generateElements();
+    })
   }
 }
 

@@ -1,6 +1,7 @@
 import _ from 'lodash';
+import element from './element';
 
-class task{
+class task extends element{
   constructor(name, importance, description, dueDate){
     this.name = name;
     this.importance = importance;

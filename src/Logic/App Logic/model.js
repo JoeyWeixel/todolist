@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
-
-class webpage{
+class model{
   constructor(){
     this.elementList = Array();
   }
@@ -24,3 +23,5 @@ class webpage{
     });
   }
 }
+
+export default model;
