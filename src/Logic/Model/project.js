@@ -11,18 +11,16 @@ class project{
     this.taskList.push(task);
   }
   removeTask(taskToRemove){
-    _.remove(array, (arrayElement) =>{
-      arrayElement == taskToRemove;
-    })
+    _.remove(this.taskList, taskToRemove);
   }
   get taskList(){
     return this.$taskList;
   }
   get title(){
-    return this.$name;
+    return this.$title;
   }
   set title(name){
-    this.$name = name;
+    this.$title = title;
   }
   set taskList(taskList){
     this.$taskList = taskList;

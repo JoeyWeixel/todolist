@@ -1,4 +1,5 @@
 import _, { forEach } from "lodash";
+import task from "../Model/task";
 
 class view{
   constructor(){
@@ -41,8 +42,10 @@ class view{
     const tab = document.createElement('div');
     tab.classList.add('tab');
     tab.addEventListener('click', e => {
-      this.$controller.currentProject = project;
-      this.updatePage();
+      if(this.$controller.currentProject != project){
+        this.$controller.currentProject = project;
+        this.updatePage();
+      }
     });
 
     const title = document.createElement('div');
@@ -68,6 +71,34 @@ class view{
 
     return tab;
   }
+  generateNewTabForm(){
+    const tab = document.createElement('div');
+    tab.classList.add('tab', 'form');
+
+    const title = document.createElement('input');
+    title.type = 'text';
+    title.id = 'newTaskTitle';
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'newTaskTitle');
+    titleLabel.innerText = 'Input tab title';
+    title.classList.add('title', 'input');
+    tab.appendChild(titleLabel);
+    tab.appendChild(title);
+
+    const addProjectButton = document.createElement('div');
+    addProjectButton.classList.add('button', 'add');
+    addProjectButton.addEventListener('click', e => {
+      if(title.value != ''){
+        this.$controller.createProject(title.value);
+      }else{
+        alert('Title field must have a unique name and must not be empty!');
+      }
+    });
+    tab.appendChild(addProjectButton);
+
+    return tab;
+  }
+
   generateTaskList(){
     const taskList = [];
     this.$controller.currentProject.taskList.forEach(task =>{
@@ -104,7 +135,7 @@ class view{
       this.$controller.deleteTask(curTask);
       this.updatePage();
     })
-    this.tab.appendChild(deleteTaskButton);
+    task.appendChild(deleteTaskButton);
 
     const editTaskButton = document.createElement('div');
     editTaskButton.classList.add('button', 'edit');
@@ -112,10 +143,69 @@ class view{
       this.$controller.editTask();
       this.updatePage();
     })
-    this.tab.appendChild(editTaskButton);
+    task.appendChild(editTaskButton);
 
     return task;
   }
+  generateNewTaskForm(){
+    const taskForm = document.createElement('div');
+    taskForm.classList.add('form', 'task');
+
+    const title = document.createElement('input');
+    title.type = 'text';
+    title.id = 'newTaskTitle';
+    const titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', 'newTaskTitle');
+    titleLabel.innerText = 'Input task title';
+    title.classList.add('title', 'input');
+    taskForm.appendChild(titleLabel);
+    taskForm.appendChild(title);
+
+    const description = document.createElement('input');
+    description.type = 'text';
+    description.id = 'newTaskDescription';
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.setAttribute('for', 'newTaskDescription');
+    descriptionLabel.innerText = 'Input task description';
+    description.classList.add('description', 'input');
+    taskForm.appendChild(descriptionLabel);
+    taskForm.appendChild(description);
+
+    const importance = document.createElement('select');
+    importance.name = 'newTaskImportance';
+    const importanceChoices = ['none','!', '!!', '!!!'];
+    for(let i=0; i<importanceChoices.length; i++){
+      const option = document.createElement("option");
+      option.value = importanceChoices[i];
+      option.text = importanceChoices[i];
+      importance.appendChild(option);
+    }
+
+    const importanceLabel = document.createElement('label');
+    importanceLabel.setAttribute('for', 'newTaskImportance');
+    importanceLabel.innerText = 'Input task importance';
+    importance.classList.add('importance', 'input');
+    taskForm.appendChild(importance);
+
+    const dueDate = document.createElement('input');
+    dueDate.type = 'date';
+    dueDate.id = 'newTaskDueDate';
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.setAttribute('for', 'newTaskDueDate');
+    dueDateLabel.innerText = 'Input task due date';
+    dueDate.classList.add('dueDate', 'input');
+    taskForm.appendChild(dueDate);
+
+    const addTaskButton = document.createElement('div');
+    addTaskButton.classList.add('button', 'add');
+    addTaskButton.addEventListener('click', e => {
+      this.$controller.createTask(title.value, description.value, importance.value, dueDate.value);
+    });
+    taskForm.appendChild(addTaskButton);
+
+    return taskForm;
+  }
+
 
   updateSideBar(){
     const sidebar = document.getElementById('sidebar');
@@ -124,14 +214,7 @@ class view{
     this.generateProjectTabList().forEach(tab => {
       sidebar.appendChild(tab);
     });
-
-    const addProjectButton = document.createElement('div');
-    addProjectButton.classList.add('button', 'add');
-    addProjectButton.addEventListener('click', e => {
-      this.$controller.addProject();
-      this.updatePage();
-    });
-    sidebar.appendChild(addProjectButton);
+    sidebar.appendChild(this.generateNewTabForm());
     
   }
   updateContentArea(){
@@ -141,17 +224,11 @@ class view{
       content.appendChild(task);
     });
 
-    const addTaskButton = document.createElement('div');
-    addTaskButton.classList.add('button', 'add');
-    addTaskButton.addEventListener('click', e => {
-      this.$controller.addTask();
-      this.updatePage();
-    });
-    content.appendChild(addTaskButton);
+    content.appendChild(this.generateNewTaskForm());
   }
   updatePage(){
-    reloadContentArea();
-    reloadSideBar();
+    this.updateContentArea();
+    this.updateSideBar();
   }
 }
 
